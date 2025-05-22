@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="style.css" />
+  <title>PKJ FOODS - Menu</title>
+  <style>
+    /* Additional styles for menu item popups */
+    .menu-item {
+      cursor: pointer;
+      color: #ff6347;
+      text-decoration: underline;
+      display: inline-block;
+      padding: 2px 5px;
+    }
+    
+    /* Popup container */
+    .popup {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+      margin: 5px 0;
+    }
+    
+    /* Popup text/image container */
+    .popup .popuptext {
+      visibility: hidden;
+      width: 80vw;  /* 80% of viewport width */
+      max-width: 95vw;  /* Prevent overflow on small screens */
+      min-width: 200px;
+      box-sizing: border-box;
+      margin: 2vw;
+      height: 80vh;  /* 80% of viewport height */
+      max-height: 800px;  /* Maximum height */
+      background-color: white;
+      color: #333;
+      text-align: center;
+      border-radius: 12px;
+      padding: 20px;
+      position: fixed;
+      z-index: 9999;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      border: 2px solid #ff6347;
+      opacity: 0;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      filter: none !important; /* Remove any blur */
+      overflow: auto;
+    }
+    
+    /* Popup arrow - removed as it's not needed with centered positioning */
+    
+    /* Show popup */
+    .popup .show {
+      visibility: visible;
+      opacity: 1;
+    }
+    
+    /* Popup image styles */
+    .popup .popuptext img {
+      max-width: 100%;
+      max-height: calc(80vh - 100px);  /* Leave space for close button and padding */
+      height: auto;
+      object-fit: contain;
+      border-radius: 8px;
+      display: block;
+      margin: 0 auto;
+      opacity: 1 !important;  /* Force full opacity */
+      filter: none !important; /* Remove any blur */
+      box-shadow: 0 2px 16px rgba(0,0,0,0.15); /* Subtle shadow for clarity */
+    }
+
+    /* Close button for popup */
+    .popup-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 40px;
+      height: 40px;
+      background: #ff6347;
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 40px;
+      cursor: pointer;
+      font-size: 24px;
+      font-weight: bold;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      z-index: 10000;  /* Ensure it's above the image */
+    }
+
+    .popup-close:hover {
+      background: #e74c3c;
+      transform: scale(1.1);
+    }
+
+    /* Overlay when popup is active */
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.18);
+      z-index: 99998;
+    }
+
+    .popuptext {
+      visibility: visible !important;
+      width: auto;
+      max-width: 90vw;
+      min-width: 200px;
+      box-sizing: border-box;
+      margin: 2vw;
+      height: auto;
+      max-height: 90vh;
+      background-color: white;
+      color: #333;
+      text-align: center;
+      border-radius: 12px;
+      padding: 20px;
+      position: fixed;
+      z-index: 99999;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      border: 2px solid #ff6347;
+      opacity: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      filter: none !important;
+      overflow: auto;
+    }
+
+    .popuptext img {
+      max-width: 100%;
+      max-height: 70vh;
+      height: auto;
+      object-fit: contain;
+      border-radius: 8px;
+      display: block;
+      margin: 0 auto;
+      opacity: 1 !important;
+      filter: none !important;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.15);
+    }
+
+    /* Menu item hover effect */
+    .menu-item:hover {
+      background-color: rgba(255, 99, 71, 0.1);
+      border-radius: 4px;
+    }
+  </style>
+</head>
+
+<body class="flip-body">
+  <div class="flipbook">
+    
+    <div class="hard">PKJ FOODS MENU<small>~ PRANAV-JAYAVEER-KRISHNA</small></div>
+    <div class="hard">
+      <div class="page-navigation">
+        <div class="nav-arrow left">←</div>
+      </div>
+    </div>
+    <div>
+      <small>WELCOME TO PKJ FOODS</small>
+      <small>Enjoy our delicious menu!</small>
+      <div class="page-navigation">
+        <div class="nav-arrow right">→</div>
+      </div>
+    </div>
+    <div>
+      <h1>Burgers:</h1>
+      <p>
+        <div class="popup" onclick="showPopup('1.png', 'Classic Cheeseburger')">
+          <span class="menu-item">Classic Cheeseburger</span>---price: 5.99
+        </div>
+        
+        <div class="popup" onclick="showPopup('2.jpg', 'Bacon Burger')">
+          <span class="menu-item">Bacon Burger</span>---price: 6.99
+        </div>
+        
+        <div class="popup" onclick="showPopup('3.jpg', 'Veggie Burger')">
+          <span class="menu-item">Veggie Burger</span>---price: 5.49
+        </div>
+        
+        <div class="popup" onclick="showPopup('4.jpg', 'Double Cheeseburger')">
+          <span class="menu-item">Double Cheeseburger</span>---price: 7.99
+        </div>
+        
+        <div class="popup" onclick="showPopup('5.jpg', 'Spicy Chicken Burger')">
+          <span class="menu-item">Spicy Chicken Burger</span>---price: 6.49
+        </div>
+      </p>
+      <p>Click on the text to view a picture of the food item</p>
+      <div class="page-navigation">
+        <div class="nav-arrow left">←</div>
+      </div>
+    </div>
+    <div>
+      <h1>Pizzas:</h1>
+      <p>
+        <div class="popup" onclick="showPopup('6.jpg', 'Pepperoni Pizza')">
+          <span class="menu-item">Pepperoni Pizza</span>---price: 8.99
+        </div>
+        
+        <div class="popup" onclick="showPopup('7.jpg', 'Margherita Pizza')">
+          <span class="menu-item">Margherita Pizza</span>---price: 7.99
+        </div>
+        
+        <div class="popup" onclick="showPopup('8.jpg', 'BBQ Chicken Pizza')">
+          <span class="menu-item">BBQ Chicken Pizza</span>---price: 9.99
+        </div>
+       
+        <div class="popup" onclick="showPopup('10.jpg', 'Vegetable Pizza')">
+          <span class="menu-item">Vegetable Pizza</span>---price: 8.49
+        </div>
+        
+        <div class="popup" onclick="showPopup('11.jpg', 'Hawaiian Pizza')">
+          <span class="menu-item">Hawaiian Pizza</span>---price: 9.49
+        </div>
+      </p>
+      <p>Click on the text to view a picture of the food item</p>
+      <div class="page-navigation">
+        <div class="nav-arrow right">→</div>
+      </div>
+    </div>
+    <div>
+      <h1>Sandwiches:</h1>
+      <p> 
+        <div class="popup" onclick="showPopup('12.jpg', 'Grilled Chicken Sandwich')">
+          <span class="menu-item">Grilled Chicken Sandwich</span>---price: 6.99
+        </div>
+      
+        <div class="popup" onclick="showPopup('13.jpg', 'Turkey Club Sandwich')">
+          <span class="menu-item">Turkey Club Sandwich</span>---price: 7.49
+        </div>
+    
+        <div class="popup" onclick="showPopup('14.jpg', 'Veggie Sandwich')">
+          <span class="menu-item">Veggie Sandwich</span>---price: 5.99
+        </div>
+     
+        <div class="popup" onclick="showPopup('15.jpg', 'BLT Sandwich')">
+          <span class="menu-item">BLT Sandwich</span>---price: 6.49
+        </div>
+       
+        <div class="popup" onclick="showPopup('16.jpg', 'Philly Cheesesteak')">
+          <span class="menu-item">Philly Cheesesteak</span>---price: 8.99
+        </div>
+      </p>
+      <p>Click on the text to view a picture of the food item</p>
+      <div class="page-navigation">
+        <div class="nav-arrow left">←</div>
+      </div>
+    </div>
+    <div>
+      <h1>Sides & Starters:</h1>
+      <p> 
+        <div class="popup" onclick="showPopup('17.jpg', 'French Fries')">
+          <span class="menu-item">French Fries</span>---price: 3.99
+        </div>
+    
+        <div class="popup" onclick="showPopup('18.jpg', 'Peri Peri Fries')">
+          <span class="menu-item">Peri Peri Fries</span>---price: 4.49
+        </div>
+      
+        <div class="popup" onclick="showPopup('19.jpg', 'Garlic Bread')">
+          <span class="menu-item">Garlic Bread</span>---price: 4.99
+        </div>
+      
+        <div class="popup" onclick="showPopup('20.jpg', 'Chicken Nuggets')">
+          <span class="menu-item">Chicken Nuggets</span>---price: 5.99
+        </div>
+       
+        <div class="popup" onclick="showPopup('21.jpg', 'Cheese Balls')">
+          <span class="menu-item">Cheese Balls</span>---price: 6.49
+        </div>
+       
+        <div class="popup" onclick="showPopup('22.jpg', 'Chicken Wings')">
+          <span class="menu-item">Chicken Wings</span>---price: 7.99
+        </div>
+   
+        <div class="popup" onclick="showPopup('23.jpg', 'Onion Rings')">
+          <span class="menu-item">Onion Rings</span>---price: 4.99
+        </div>
+
+        <div class="popup" onclick="showPopup('24.jpg', 'Potato Wedges')">
+          <span class="menu-item">Potato Wedges</span>---price: 4.99
+        </div>
+   
+        <div class="popup" onclick="showPopup('25.jpg', 'Mozzarella Sticks')">
+          <span class="menu-item">Mozzarella Sticks</span>---price: 6.99
+        </div>
+      </p>
+      <p>Click on the text to view a picture of the food item</p>
+      <div class="page-navigation">
+        <div class="nav-arrow right">→</div>
+      </div>
+    </div>
+    <div>
+      <h1>Juices:</h1>
+      <p>
+        <div class="popup" onclick="showPopup('26.jpg', 'Orange Juice')">
+          <span class="menu-item">Orange Juice</span>---price: 3.99
+        </div>
+        
+        <div class="popup" onclick="showPopup('27.jpg', 'Apple Juice')">
+          <span class="menu-item">Apple Juice</span>---price: 3.49
+        </div>
+   
+        <div class="popup" onclick="showPopup('28.jpg', 'Carrot Juice')">
+          <span class="menu-item">Carrot Juice</span>---price: 4.49
+        </div>
+  
+        <div class="popup" onclick="showPopup('29.jpg', 'Pineapple Juice')">
+          <span class="menu-item">Pineapple Juice</span>---price: 4.99
+        </div>
+    
+        <div class="popup" onclick="showPopup('30.jpg', 'Mixed Berry Juice')">
+          <span class="menu-item">Mixed Berry Juice</span>---price: 5.49
+        </div>
+      </p>  
+      <p>Click on the text to view a picture of the food item</p>
+      <div class="page-navigation">
+        <div class="nav-arrow left">←</div>
+      </div>
+    </div>
+    <div>
+      <h1>Desserts:</h1>
+      <p>
+        <div class="popup" onclick="showPopup('31.jpg', 'Cake')">
+          <span class="menu-item">Cake</span>---price: 4.99
+        </div>
+     
+        <div class="popup" onclick="showPopup('32.jpg', 'Cheesecake')">
+          <span class="menu-item">Cheesecake</span>---price: 5.49
+        </div>
+
+        <div class="popup" onclick="showPopup('33.jpg', 'Apple Pie')">
+          <span class="menu-item">Apple Pie</span>---price: 4.99
+        </div>
+    
+        <div class="popup" onclick="showPopup('34.jpg', 'Ice Cream Sundae')">
+          <span class="menu-item">Ice Cream Sundae</span>---price: 3.99
+        </div>
+    
+        <div class="popup" onclick="showPopup('35.jpg', 'Tiramisu')">
+          <span class="menu-item">Tiramisu</span>---price: 5.99
+        </div>
+      </p>
+      <p>Click on the text to view a picture of the food item</p>
+      <div class="page-navigation">
+        <div class="nav-arrow right">→</div>
+      </div>
+    </div>
+    
+    <div class="hard">Thank You <small>~ PRANAV-JAYAVEER-KRISHNA</small>
+      <div class="page-navigation">
+        <div class="nav-arrow left">←</div>
+      </div>
+    </div>
+    <div class="hard">
+      <p style="text-align: center; margin-top: 50px;">
+        <a href="order_online.html" style="text-decoration: none; color: #ff6347; font-weight: bold; display: block; margin-bottom: 20px; font-size: 18px;">ORDER ONLINE</a>
+        <a href="track_order.html" style="text-decoration: none; color: #ff6347; font-weight: bold; display: block; margin-bottom: 20px; font-size: 18px;">TRACK ORDER</a>
+        <a href="index.html" style="text-decoration: none; color: #ff6347; font-weight: bold; display: block; font-size: 18px;">BACK TO HOMEPAGE</a>
+      </p>
+      <div class="page-navigation">
+        <div class="nav-arrow right">→</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="jquery.js"></script>
+  <script src="turn.js"></script>
+  <script>
+    $(".flipbook").turn();
+    
+    // Create a single popup and overlay in body if not present
+    function ensurePopupElements() {
+      if (!document.getElementById('globalPopupOverlay')) {
+        var overlay = document.createElement('div');
+        overlay.className = 'popup-overlay';
+        overlay.id = 'globalPopupOverlay';
+        overlay.style.display = 'none';
+        document.body.appendChild(overlay);
+      }
+      if (!document.getElementById('globalPopupModal')) {
+        var popup = document.createElement('div');
+        popup.className = 'popuptext';
+        popup.id = 'globalPopupModal';
+        popup.style.display = 'none';
+        document.body.appendChild(popup);
+      }
+    }
+
+    // Show popup with imageSrc and alt text
+    function showPopup(imageSrc, altText) {
+      ensurePopupElements();
+      var overlay = document.getElementById('globalPopupOverlay');
+      var popup = document.getElementById('globalPopupModal');
+
+      // Remove previous content
+      popup.innerHTML = '';
+
+      // Add image
+      var img = document.createElement('img');
+      img.src = imageSrc;
+      img.alt = altText;
+      popup.appendChild(img);
+
+      // Add close button
+      var closeBtn = document.createElement('div');
+      closeBtn.className = 'popup-close';
+      closeBtn.innerHTML = '×';
+      closeBtn.onclick = function(e) {
+        e.stopPropagation();
+        overlay.style.display = 'none';
+        popup.style.display = 'none';
+      };
+      popup.appendChild(closeBtn);
+
+      // Show overlay and popup
+      overlay.style.display = 'block';
+      popup.style.display = 'flex';
+    }
+
+    // Hide popup when clicking overlay
+    document.addEventListener('DOMContentLoaded', function() {
+      ensurePopupElements();
+      var overlay = document.getElementById('globalPopupOverlay');
+      var popup = document.getElementById('globalPopupModal');
+      overlay.onclick = function() {
+        overlay.style.display = 'none';
+        popup.style.display = 'none';
+      };
+    });
+  </script>   
+</body>
+
+</html> 
